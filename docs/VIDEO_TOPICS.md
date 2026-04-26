@@ -1,8 +1,5 @@
 # Video topics — Competitor Flag
 
-5-min HireVue, talk-only. No demo. Vercel link is shared separately with the submission.
-
-These are talking points, not a script — pick your own ordering and phrasing on the day.
 
 ## 1. The problem (≈45 sec)
 
