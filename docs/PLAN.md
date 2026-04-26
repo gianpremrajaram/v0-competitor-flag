@@ -240,14 +240,3 @@ The system prompt instructs the model to fuzzy-match each signal against all thr
 1. **Microsoft AGT** — full blog text → expected `positioning_collision` / `high` / `reposition`
 2. **Langfuse-style agent observability launch** — adjacent → expected `adjacent_noise` / `medium` / `monitor`
 3. **Unrelated AI workflow tool** (e.g., a Zapier-style "AI Step" announcement) — unrelated → expected `non_threat` / `low` / `ignore`
-
-### Phase 4 (revised — talk-only, ≤5 min HireVue)
-
-Not a timed script — four topics in order:
-1. **Architecture** — single Next.js page on Vercel hobby; one API route → Groq Llama 3.3 70B with JSON mode + validator + fallback; v0 scaffold + Claude Code content fill.
-2. **What I built end-to-end** — paste a market signal → structured verdict (overlap score, threat type, confidence, evidence, recommended action) against a hard-coded Precept profile; cached examples bulletproof the demo if Groq blips.
-3. **Problem it solves** — every "Microsoft just shipped X" link costs me 30 minutes of triage thrash; this turns it into 30 seconds.
-4. **Two scaling iterations** —
-   - Iteration A (input-agnostic, today): paste anything, get a verdict.
-   - Iteration B (personalised to my workflow): RSS / Slack ingestion, scheduled triage, history that persists, calibrated against my actual past calls.
-   - Iteration C (general availability): swap-in profile editor, multi-tenant, anyone can point it at their own positioning.
