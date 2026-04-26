@@ -1,4 +1,4 @@
-# PLAN — Competitor Flag (Bolt AI Product task)
+# PLAN — Competitor Flag 
 
 > Working plan synthesised from `TASK.md`, `initial v0 prompt.md`, `Groq system prompt.md`, `File structure v0 vercel build.md`, and a full read of the current code. Phases 1–2 ship; this doc is about Phase 3 (Claude Code content fill + small patches) and Phase 4 (polish + record).
 
@@ -6,7 +6,7 @@
 
 ## 1. Brief in one paragraph
 
-Pick a real, specific problem from your own life and ship a small AI solution in ~4 hours, then narrate it in a ≤5-min video covering: problem, breakdown, what you built, how you used AI, and reflection. Bolt is grading **thinking, not polish** — a rough thing that works beats a beautiful mockup. Tooling is unrestricted (ChatGPT, Notion, Zapier, Make, scripts, prompts) so long as the use of AI is honest and visible.
+<<problem/task, limitations>>
 
 The chosen problem: **first-pass triage of competitor / market signals** for Precept. Today every "Microsoft just launched X" link drops you into 30 minutes of "do I need to care?" thrash; the tool turns a pasted signal into a structured overlap verdict (score / threat type / evidence / action) in under a second.
 
@@ -56,7 +56,7 @@ Reviewed every file under `app/`, `lib/`, and `components/`. Headline: **the sca
 ### Patches (small, surgical)
 1. **Orphan string at top of `components/analyse-signal.tsx:2`**: `"comment test vercel sync"` — leftover from sync verification. Delete the line.
 2. **No truncation guard before Groq call**: `TASK.md` flags Groq's 6,000 TPM cap; a >3k-char paste can 429. Add a 3,000-char truncation in the route (server-side, transparent to client). Inline 2 lines, no helper file.
-3. **Footer placeholder**: `app/page.tsx:72` reads `Built for [Bolt application]` — replace with the real footer text once confirmed.
+3. **Footer placeholder**: `app/page.tsx:72` reads xy — replace with the real footer text once confirmed.
 4. **`next.config.mjs` has `typescript.ignoreBuildErrors: true`**: v0 ships this by default. I'll leave it on (turning it off can blow up the deploy if a v0-generated import is loose); flag for follow-up only.
 5. **`package-lock.json` is untracked but `pnpm-lock.yaml` is committed**: pick one. The repo already uses pnpm — delete `package-lock.json` from the working tree before committing.
 
@@ -177,7 +177,7 @@ Default to (B) unless you say otherwise.
 5. **Truncation policy** — silently truncate >3,000 chars (my default), or fail loudly with a "signal too long" card?
 6. **OOP refactor** — do the `SignalAnalyser` class extraction (recommended, ~40 lines, route shrinks to ~15) or skip and keep the linear route?
 7. **Lockfile** — `pnpm-lock.yaml` is committed, `package-lock.json` is untracked. Confirm pnpm is canonical and I can delete `package-lock.json`.
-8. **Footer text** — what should `Built for [Bolt application]` actually say?
+8. **Footer text** — what should Footer actually say?
 9. **README rewrite** — happy for me to overwrite the v0-default README with a real one (problem, run, AI workflow, schema), or leave it?
 10. **Video script** — should I draft `docs/VIDEO_SCRIPT.md` after Phase 3 lands, or only after you've recorded?
 
@@ -191,7 +191,7 @@ Default to (B) unless you say otherwise.
 | `typescript.ignoreBuildErrors: true` masking a real error | low | Run `pnpm build` locally once before pushing to surface anything hidden |
 | Groq 6k TPM 429 on long pastes | low after patch | 3,000-char truncation in route (Phase 3 step 7) |
 | Stale fork — v0 portal and main diverge | low | v0 sync is bidirectional; do all edits in Claude Code, push, Vercel deploys, v0 reflects |
-| Bolt graders can't run the demo | low | Vercel `*.vercel.app` URL is public; include in submission with the video |
+| can't run the demo | low | Vercel `*.vercel.app` URL is public; include in submission with the video |
 
 ---
 
@@ -207,11 +207,11 @@ Default to (B) unless you say otherwise.
 | 2 | Real AGT signal added at `docs/Microsoft AGT.md` (full Microsoft blog post, 11k chars, Apr 2 2026) | Use this verbatim for example #1 |
 | 3 | Capture cached results from live Groq (option B), don't hand-write | Need running dev server + curl to capture once, then freeze |
 | 4 | `GROQ_API_KEY` already in `.env.local` (nano). Test locally only, don't hit deployed URL | Smoke-test cycle = local `pnpm dev` + curl |
-| 5 | **Don't refactor any v0 files**. Skip the `SignalAnalyser` class extraction. Don't add Bolt / product-builder framing in the UI; signal is "I built this for myself" | New code lives in new `/lib` files; existing v0 files only get content fills + the smallest possible additive changes (header/footer text, one truncation import in route.ts) |
+| 5 | **Don't refactor any v0 files**. Skip the `SignalAnalyser` class extraction. D | New code lives in new `/lib` files; existing v0 files only get content fills + the smallest possible additive changes (header/footer text, one truncation import in route.ts) |
 | — | Truncation should be elegant pre-cleaning/chunking | New `lib/signal-preprocessor.ts` (functions, not class — single-shot transform doesn't earn OOP) does whitespace normalisation + truncate-at-sentence-boundary at 12,000 chars (~3,000 tokens, well under Groq 6k TPM) |
 | — | Keywords must be **fuzzy + tiered**: strong / medium / low match, all return results, with reasonable upper bound | Tiers live inside the system prompt (so route stays untouched). ~6–8 entries per tier, ~20 total. Sidebar shows a flat union of ~12 for readability |
 | 7 | (lockfile) — TBD; default: keep `pnpm-lock.yaml`, gitignore `package-lock.json` if it appears | Will check at commit time |
-| 8 | Footer: workflow-relevant, NOT Bolt-specific | "Built with v0, Claude Code, and Groq Llama 3.3 70B" |
+| 8 | Footer: workflow-relevant, NOT company-specific | "Built with v0, Claude Code, and Groq Llama 3.3 70B" |
 | — | Header gets a non-tech Precept blurb — recruiter testing the link should grok Precept without abbreviations. Use user's voice ("AIs working together", "to solve tasks") | Subtitle becomes: "A personal triage tool for Precept Labs — open-source software that improves the quality of how AIs work together to solve tasks." |
 | 9 | (README) — proceed | Phase 3 step 11: full rewrite |
 | 10 | (Video) — not a script, just key topics: architecture, what was built end-to-end, problem solved, two scaling iterations (input-agnostic → personalised to my workflow → general availability). HireVue talk-only, no demo, Vercel link shared separately | Phase 4 deliverable becomes `docs/VIDEO_TOPICS.md`, terse — replaces the timed script in §8 |
