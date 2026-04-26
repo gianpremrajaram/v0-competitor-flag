@@ -34,9 +34,10 @@ export default function Page() {
     <div className="flex min-h-screen flex-col bg-background">
       <header className="border-b border-border bg-background">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-0.5">
             <h1 className="text-lg font-semibold tracking-tight text-foreground">Competitor Flag</h1>
-            <p className="text-xs text-muted-foreground">First-pass overlap analysis for market signals.</p>
+            <p className="text-xs text-muted-foreground">A personal triage tool for new market signals.</p>
+            <p className="text-xs text-muted-foreground">Precept Labs makes open-source software that improves quality when multiple AIs work together to solve tasks.</p>
           </div>
         </div>
       </header>
@@ -69,7 +70,7 @@ export default function Page() {
 
       <footer className="border-t border-border bg-background">
         <div className="mx-auto w-full max-w-7xl px-4 py-4 text-xs text-muted-foreground sm:px-6 lg:px-8">
-          Built for [Bolt application]
+          Built with v0, Claude Code, and Groq Llama 3.3 70B.
         </div>
       </footer>
     </div>
