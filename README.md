@@ -1,8 +1,10 @@
 # Competitor Flag
 
+https://v0-competitor-flag.vercel.app/
+
 A personal triage tool for new market signals. Paste an article, launch note, or product claim and get a structured first-pass overlap analysis against a hard-coded company profile in under a second.
 
-Built for [Precept Labs](https://precept-labs.com) — open-source software that improves quality when multiple AIs work together to solve tasks.
+Built for Precept Labs — open-source software that improves quality when multiple AIs work together to solve tasks.
 
 ## What it does
 
