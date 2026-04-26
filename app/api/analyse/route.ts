@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import OpenAI from "openai"
 import { SYSTEM_PROMPT } from "@/lib/system-prompt"
+import { preprocessSignalText } from "@/lib/signal-preprocessor"
 import { validateAnalysisResult, fallbackResult } from "@/lib/validate-result"
 import type { CompanyProfile, Signal } from "@/lib/types"
 
@@ -30,6 +31,8 @@ export async function POST(req: Request) {
   }
 
   const systemPrompt = SYSTEM_PROMPT && SYSTEM_PROMPT.trim().length > 0 ? SYSTEM_PROMPT : DEFAULT_SYSTEM_PROMPT
+
+  signal.raw_text = preprocessSignalText(signal.raw_text)
 
   const userPayload = {
     instruction:
